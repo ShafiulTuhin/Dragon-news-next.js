@@ -1,4 +1,5 @@
 import { getNewsByCategoryId } from "@/lib/data";
+import NewsCard from "../shared/NewsCard";
 
 const NewsForHomepage = async () => {
   const news = await getNewsByCategoryId("08");
@@ -11,14 +12,9 @@ const NewsForHomepage = async () => {
 
       <div className="space-y-3">
         {news.length > 0 ? (
-          news.slice(0, 5).map((n) => (
-            <div
-              className="p-6 rounded-md border bg-pink-100 hover:shadow-md transition"
-              key={n._id}
-            >
-              <h3 className="font-semibold text-gray-800">{n.title}</h3>
-            </div>
-          ))
+          news
+            .slice(0, 5)
+            .map((n) => <NewsCard key={n._id} allNews={n}></NewsCard>)
         ) : (
           <div className="flex flex-col items-center justify-center text-center py-16 border rounded-lg bg-gray-50">
             {/* Emoji / Icon */}
