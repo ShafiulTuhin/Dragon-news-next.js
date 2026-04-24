@@ -5,7 +5,7 @@ import React from "react";
 
 const MainLayout = ({ children }) => {
   return (
-    <div className="px-4 ">
+    <div className="container mx-auto lg:px-0 px-4 ">
       <Header />
       <Marque />
       <Navbar />

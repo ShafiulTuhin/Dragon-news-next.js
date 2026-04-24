@@ -1,18 +1,21 @@
 import Category from "@/components/homepage/Category";
-import NewsForHomepage from "@/components/homepage/NewsForHomepage";
+import NewsByCategory from "@/components/category-news/NewsByCategory";
 import SocialSidebar from "@/components/homepage/SocialSidebar";
+import { getNewsByCategoryId } from "@/lib/data";
 
-export default async function Home() {
+const CategoryNewsPage = async ({ params }) => {
+  const { id } = await params;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-4 container mx-auto px-4">
       {/* Category */}
       <div className="md:col-span-3 order-2 md:order-1">
-        <Category />
+        <Category isActive={id} />
       </div>
 
       {/* Main Content */}
       <div className="md:col-span-6 order-1 md:order-2">
-        <NewsForHomepage />
+        <NewsByCategory news={await getNewsByCategoryId(id)} />
       </div>
 
       {/* Sidebar */}
@@ -21,4 +24,6 @@ export default async function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default CategoryNewsPage;

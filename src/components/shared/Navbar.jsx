@@ -7,6 +7,7 @@ import Link from "next/link";
 const Navbar = () => {
   return (
     <div className="flex justify-between container mx-auto py-8">
+      <div></div>
       <ul className="flex gap-5 items-center font-bold text-[#797979]">
         <li>
           <NavLink href={"/"}>Home</NavLink>

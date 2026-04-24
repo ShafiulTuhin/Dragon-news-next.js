@@ -3,7 +3,7 @@ import React from "react";
 
 const AuthLayout = ({ children }) => {
   return (
-    <div>
+    <div className="px-4 ">
       <Navbar />
       {children}
     </div>
