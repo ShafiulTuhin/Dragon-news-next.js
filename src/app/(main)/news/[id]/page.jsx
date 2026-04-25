@@ -36,7 +36,6 @@ const NewsDetailsPage = async ({ params }) => {
                 className="rounded-full"
               />
               <div>
-                {" "}
                 <h2 className="font-semibold">{author?.name}</h2>
                 <h2 className="text-[#797979]">{author?.published_date}</h2>
               </div>
