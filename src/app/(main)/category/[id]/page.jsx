@@ -3,6 +3,10 @@ import NewsByCategory from "@/components/category-news/NewsByCategory";
 import SocialSidebar from "@/components/homepage/SocialSidebar";
 import { getNewsByCategoryId } from "@/lib/data";
 
+export const metaData = {
+  title: "Dragoon-news | category",
+};
+
 const CategoryNewsPage = async ({ params }) => {
   const { id } = await params;
 

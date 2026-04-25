@@ -1,16 +1,27 @@
-import NewsCard from "@/components/shared/NewsCard";
-import { getNewsDetails } from "@/lib/data";
+import { getCategories, getNewsDetails } from "@/lib/data";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { CiBookmark, CiShare2 } from "react-icons/ci";
 import { FaEye, FaStar } from "react-icons/fa";
 
+export const generateMetadata = async ({ params }) => {
+  const { id } = await params;
+  const news = await getNewsDetails(id);
+
+  return {
+    title: news.title,
+    description: news.details,
+  };
+};
+
 const NewsDetailsPage = async ({ params }) => {
   const { id } = await params;
   const news = await getNewsDetails(id);
+
   console.log(news);
-  const { title, author, image_url, details, rating, total_view, _id } = news;
+  const { title, author, image_url, details, rating, total_view, category_id } =
+    news;
   return (
     <div className="max-w-5xl mx-auto">
       <div className="card bg-base-100  shadow-sm">
@@ -57,9 +68,9 @@ const NewsDetailsPage = async ({ params }) => {
                 <FaEye size={24} /> {total_view}
               </h2>
             </div>
-            <Link href={"/"}>
+            <Link href={`/category/${category_id}`}>
               <button className="btn bg-pink-500 rounded-lg text-white font-semibold">
-                Go back
+                Category news
               </button>
             </Link>
           </div>
