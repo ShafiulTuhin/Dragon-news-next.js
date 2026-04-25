@@ -1,15 +1,36 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
+  const [isPasswordShow, setIsPasswordShow] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const handleSubmitForm = (data) => console.log(data);
+  const handleSubmitForm = async (data) => {
+    const { email, password } = data;
+
+    const { data: res, error } = await authClient.signIn.email({
+      email,
+      password,
+      rememberMe: true,
+      callbackURL: "/",
+    });
+
+    if (error) {
+      toast.error(error.message);
+    }
+
+    if (res) {
+      toast.success("sign in successfully");
+    }
+  };
 
   return (
     <div className="bg-slate-200 py-20 px-5">
@@ -38,16 +59,29 @@ const LoginPage = () => {
               </p>
             )}
           </fieldset>
-          <fieldset className="fieldset">
+          <fieldset className="fieldset relative">
             <legend className="fieldset-legend">Password</legend>
-            <input
-              type="password"
-              className="input bg-slate-100 w-full"
-              placeholder="Type here"
-              {...register("password", {
-                required: "Password cannot be empty",
-              })}
-            />
+            <div className="flex -gap-10">
+              <input
+                type={isPasswordShow ? "text" : "password"}
+                className="input bg-slate-100 w-full"
+                placeholder="Type here"
+                {...register("password", {
+                  required: "Password cannot be empty",
+                })}
+              />
+              <span
+                onClick={() => setIsPasswordShow(!isPasswordShow)}
+                className="absolute right-2 top-4 cursor-pointer"
+              >
+                {isPasswordShow ? (
+                  <FaEye size={20} />
+                ) : (
+                  <FaEyeSlash size={20} />
+                )}
+              </span>
+            </div>
+
             {errors.password && (
               <p className="text-red-500 font-semibold">
                 {errors.password.message}

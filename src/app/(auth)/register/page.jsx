@@ -1,17 +1,37 @@
 "use client";
 
-import React from "react";
+import { authClient } from "@/lib/auth-client";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
+  const [isPasswordShow, setIsPasswordShow] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const handleSubmitForm = (data) => {
+  const handleSubmitForm = async (data) => {
     const { name, email, password, photo } = data;
+
+    const { data: res, error } = await authClient.signUp.email({
+      name,
+      email,
+      password,
+      image: photo,
+      callbackURL: "/",
+    });
+
+    if (error) {
+      toast.error(error.message);
+    }
+
+    if (res) {
+      toast.success("signUp successfully");
+    }
   };
 
   return (
@@ -41,11 +61,11 @@ const RegisterPage = () => {
             )}
           </fieldset>
           <fieldset className="fieldset ">
-            <legend className="fieldset-legend">Email address</legend>
+            <legend className="fieldset-legend">Photo Url</legend>
             <input
               type="text"
               className="input  bg-slate-100 w-full"
-              placeholder="Upload a photo"
+              placeholder="Enter photo Url"
               {...register("photo", {
                 required: "Photo url field cannot be empty",
               })}
@@ -72,10 +92,10 @@ const RegisterPage = () => {
               </p>
             )}
           </fieldset>
-          <fieldset className="fieldset">
+          <fieldset className="fieldset relative">
             <legend className="fieldset-legend">Password</legend>
             <input
-              type="password"
+              type={isPasswordShow ? "text" : "password"}
               className="input bg-slate-100 w-full"
               placeholder="Type here"
               {...register("password", {
@@ -87,6 +107,12 @@ const RegisterPage = () => {
                 {errors.password.message}
               </p>
             )}
+            <span
+              onClick={() => setIsPasswordShow(!isPasswordShow)}
+              className="absolute right-2 top-4 cursor-pointer"
+            >
+              {isPasswordShow ? <FaEye size={20} /> : <FaEyeSlash size={20} />}
+            </span>
           </fieldset>
           <button className="btn bg-pink-500 w-full text-white font-semibold">
             Register
