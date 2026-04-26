@@ -1,4 +1,5 @@
 import Logo from "@/assets/logo.png";
+
 import Image from "next/image";
 
 const Header = () => {
@@ -10,6 +11,7 @@ const Header = () => {
     month: "long",
     day: "numeric",
   }).format(today);
+
   return (
     <div className="text-center py-8 space-y-4">
       <Image

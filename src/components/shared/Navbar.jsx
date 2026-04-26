@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 const Navbar = () => {
   const { data, isPending } = authClient.useSession();
   const user = data?.user;
-  console.log(user);
   const handleLogout = async () => {
     await authClient.signOut();
     toast.success("Logged out successfully");
