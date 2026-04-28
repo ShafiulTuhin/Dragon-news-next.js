@@ -4,8 +4,6 @@ import Marquee from "react-fast-marquee";
 
 const Marque = async () => {
   const news = await getNewsByCategoryId("08");
-  // const { title } = news;
-  // console.log(title);
 
   console.log(news);
   return (
